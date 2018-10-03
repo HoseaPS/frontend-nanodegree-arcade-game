@@ -120,7 +120,7 @@ var Engine = (function(global) {
         });
         player.update(dt);
         key.update(dt);
-        door.update(dt);
+        gate.update(dt);
         finalStar.update(dt);
     }
 
@@ -185,7 +185,7 @@ var Engine = (function(global) {
         allStones.forEach(function(stone) {
             stone.render();
         });
-        door.render();
+        gate.render();
         finalStar.render();
         player.render();
         key.render();

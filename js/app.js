@@ -29,10 +29,6 @@ var Enemy = function(posiY) {
 		this.sprite = 'images/enemy-bug.png';
 };
 Enemy.prototype.checkForCollision = function() { 
-
-		// numero negativo para dar o efeito de choque
-		// pois o inimigo "deve ser renderizado para tras" e 
-		// nao de x para frente.
 		var enemyLimitLeftX = this.x - 85;
 
 		// como há um pequeno espaço entre o comeco da imagem e o comeco
@@ -113,7 +109,7 @@ Player.prototype.resetPosi = function () {
 		this.x = 304;
 		this.y = 570;
 		key.resetPosi();
-		door.resetPosi();
+		gate.resetPosi();
 		for (var i = 0; i < allStones.length; i++) {
 				allStones[i].resetPosi();
 		}
@@ -261,23 +257,23 @@ Key.prototype.render = function() {
 		}
 } 
 
-var Door = function(posiY) {
+var Gate = function(posiY) {
 		this.x = myHelper.ramdomPosiY();
 		this.y = posiY;
 		this.sprite = 'images/Selector.png';
 };
-Door.prototype.update = function (dt) {
+Gate.prototype.update = function (dt) {
 		this.checkForEntrance();
 }
-Door.prototype.resetPosi = function () {
+Gate.prototype.resetPosi = function () {
 		this.x = myHelper.ramdomPosiY();
 }
-Door.prototype.checkForEntrance = function () {
-		var doorLimitLeftX = this.x - 60;
-		var doorLimitRightX = this.x + 60;
-		var doorLimitTopY = this.y;
-		var doorLimitBottomY = this.y + 80;
-		if (player.x > doorLimitLeftX && player.x < doorLimitRightX && player.y > doorLimitTopY && player.y < doorLimitBottomY) {
+Gate.prototype.checkForEntrance = function () {
+		var gateLimitLeftX = this.x - 60;
+		var gateLimitRightX = this.x + 60;
+		var gateLimitTopY = this.y;
+		var gateLimitBottomY = this.y + 80;
+		if (player.x > gateLimitLeftX && player.x < gateLimitRightX && player.y > gateLimitTopY && player.y < gateLimitBottomY) {
 				if (key.status === 'picked' && player.level < 3) {
 						player.level += 1;
 						if (player.level === 2) {
@@ -299,7 +295,7 @@ Door.prototype.checkForEntrance = function () {
 				}
 		}
 }
-Door.prototype.render = function () {
+Gate.prototype.render = function () {
 		// quando o player estiver no level 3, o portal nao sera renderizado
 		if (player.level < 3) {
 				ctx.drawImage(Resources.get(this.sprite), this.x, this.y);            
@@ -353,7 +349,7 @@ var allStones = [new Stone (145),
 									new Stone (480)];
 var key = new Key (62);
 var finalStar = new FinalStar (62);
-var door = new Door (545);
+var gate = new Gate (545);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
