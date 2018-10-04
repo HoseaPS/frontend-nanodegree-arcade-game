@@ -1,6 +1,6 @@
 // variavel para saber qual é o estado atual do game
 var gameIsEnded = false;
-var Helper = function(){}
+var Helper = function(){};
 Helper.prototype.ramdomPosiY = function(){
 
 		// irá gerar um numero aleatorio entre 0 e 606 avançando de 101 em 101
@@ -8,12 +8,12 @@ Helper.prototype.ramdomPosiY = function(){
 		// como todas as imagens possuem 101 de largura
 		// ira sempre criar um padrao de largura que caiba nos blocos
 		return 101 * (Math.floor(Math.random() * 7));
-}
+};
 Helper.prototype.ramdomSpeed = function(){
 
 		// gerando um numero aleatorio entre 1 e 200
 		return 40 * Math.floor(Math.random() * 5 + 1);
-}
+};
 
 // Enemies our player must avoid
 var Enemy = function(posiY) {
@@ -63,7 +63,7 @@ Enemy.prototype.update = function(dt) {
 				this.speed = myHelper.ramdomSpeed();		
 		}
 		this.checkForCollision();
-}
+};
 // Draw the enemy on the screen, required method for game
 Enemy.prototype.render = function() {
 	ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
@@ -90,19 +90,19 @@ Player.prototype.update = function(dt) {
 		// se estiver na agua é porque morreu
 		if(this.status === 'onTheWater'){
 				this.resetPosi();
-				player.die();
+				this.die();
 		}
 
 		// se o numero de vidsas é igual a 0, o jogo acaba
 		if (this.life === 0) {
 				gameIsEnded = true;
 		}
-}
+};
 Player.prototype.die = function(dt) {
 		if (this.life > 0) {
 			this.life -= 1;
 		} 
-}
+};
 // reseto tudo, inclsuive posicao das pedras
 // chave e portal
 Player.prototype.resetPosi = function () {
@@ -113,8 +113,8 @@ Player.prototype.resetPosi = function () {
 		for (var i = 0; i < allStones.length; i++) {
 				allStones[i].resetPosi();
 		}
-		this.status = "stop"
-}
+		this.status = "stop";
+};
 Player.prototype.render = function () {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 		ctx.font = '36px Arial';
@@ -125,7 +125,7 @@ Player.prototype.render = function () {
 			ctx.drawImage(Resources.get(this.lifeSprite), x, 0);
 			x = x + 40;
 		}
-}
+};
 
 // como preciso saber de alguma forma quando o player for se mover
 // para caso tenha uma pedra eu possa parar seu movimento
@@ -156,9 +156,9 @@ Player.prototype.handleInput = function(key) {
 						}
 						break;   
 		}
-}
+};
 Player.prototype.move = function(dt) { 
-		switch (player.status) {
+		switch (this.status) {
 				case ('movingToLeft'):
 						this.x -= 101.5;
 						this.status = 'stop';
@@ -180,7 +180,7 @@ Player.prototype.move = function(dt) {
 						this.status = 'onTheWater';
 						break;                
 		}
-}
+};
 
 var Stone = function (y) {
 		this.x = myHelper.ramdomPosiY();
@@ -189,7 +189,7 @@ var Stone = function (y) {
 };
 Stone.prototype.update = function(dt) {
 		this.checkForCollision();
-}
+};
 Stone.prototype.checkForCollision = function () {
 		var stoneLimitLeftX = this.x - 90;
 		var stoneLimitRightX = this.x + 90;
@@ -220,13 +220,13 @@ Stone.prototype.checkForCollision = function () {
 						}
 						break;                
 		}
-}
+};
 Stone.prototype.resetPosi = function () {
 		this.x = myHelper.ramdomPosiY();
-}
+};
 Stone.prototype.render = function () {
 		ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
-}
+};
 
 var Key = function(posiY) {
 		this.x = myHelper.ramdomPosiY();
@@ -236,7 +236,7 @@ var Key = function(posiY) {
 };
 Key.prototype.update = function(dt) {
 		this.checkForCollision();
-}
+};
 Key.prototype.checkForCollision = function () {
 		var keyLimitLeftX = this.x - 60;
 		var keyLimitRightX = this.x + 60;
@@ -245,18 +245,17 @@ Key.prototype.checkForCollision = function () {
 		if (player.x > keyLimitLeftX && player.x < keyLimitRightX && player.y > keyLimitTopY && player.y < keyLimitBottomY) {
 				this.status = 'picked';
 		}
-}
+};
 Key.prototype.resetPosi = function () {
 		this.x = myHelper.ramdomPosiY();
-		key.status = 'onTheCanvas';
-}
+		this.status = 'onTheCanvas';
+};
 Key.prototype.render = function() {
 		// quando o player estiver no level 3, a key nao sera renderizada
 		if (this.status === 'onTheCanvas' && player.level < 3) {
 				ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
 		}
-} 
-
+}; 
 var Gate = function(posiY) {
 		this.x = myHelper.ramdomPosiY();
 		this.y = posiY;
@@ -264,10 +263,10 @@ var Gate = function(posiY) {
 };
 Gate.prototype.update = function (dt) {
 		this.checkForEntrance();
-}
+};
 Gate.prototype.resetPosi = function () {
 		this.x = myHelper.ramdomPosiY();
-}
+};
 Gate.prototype.checkForEntrance = function () {
 		var gateLimitLeftX = this.x - 60;
 		var gateLimitRightX = this.x + 60;
@@ -294,13 +293,13 @@ Gate.prototype.checkForEntrance = function () {
 						this.status = 'onTheCanvas';
 				}
 		}
-}
+};
 Gate.prototype.render = function () {
 		// quando o player estiver no level 3, o portal nao sera renderizado
 		if (player.level < 3) {
 				ctx.drawImage(Resources.get(this.sprite), this.x, this.y);            
 		}
-}
+};
 
 // classe semelhante à da key
 // quando pegar a estrela, o jogo acaba
@@ -311,7 +310,7 @@ var FinalStar = function(posiY) {
 };
 FinalStar.prototype.update = function (dt) {
 		this.checkForCollision();
-}
+};
 FinalStar.prototype.checkForCollision = function() {
 		// só será possivel pega-la no level 3
 		if (player.level === 3) {
@@ -324,13 +323,13 @@ FinalStar.prototype.checkForCollision = function() {
 				}            
 		}
 		
-}
+};
 FinalStar.prototype.render = function() {	
 		// só será possivel pega-la no level 3
 		if (player.level === 3) {
 				ctx.drawImage(Resources.get(this.sprite), this.x, this.y);            
 		}
-}
+};
 
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
@@ -343,10 +342,10 @@ var allEnemies = [new Enemy(145),
 									new Enemy(480)];
 player = new Player();
 var allStones = [new Stone (145), 
-									new Stone (230), 
-									new Stone (312),
-									new Stone (395),
-									new Stone (480)];
+                 new Stone (230), 
+                 new Stone (312),
+                 new Stone (395),
+                 new Stone (480)];
 var key = new Key (62);
 var finalStar = new FinalStar (62);
 var gate = new Gate (545);
