@@ -1,5 +1,5 @@
 # Froggeroz1
-Clone do clássico jogo arcade Frogger, feito com JavaScript e orientação a objetos como parte do Nanodegree Front-End Avançado da Udacity.
+Clone do clássico jogo arcade Frogger. Feito com JavaScript orientado a objetos e a API de Canvas do HTML5, como parte do Nanodegree Front-End Avançado da Udacity.
 
 ### Objetivo  
 O objetivo do jogo é coletar a chave e traze-la ao portal duas vezes, avançando um level cada vez. O terceiro level desbloqueará a Final Star, basta coleta-la para ganhar o jogo. Para jogar novamente recarregue a página
