@@ -1,5 +1,6 @@
 # Froggeroz1
 Clone do clássico jogo arcade Frogger. Feito com JavaScript orientado a objetos e a API de Canvas do HTML5, como parte do Nanodegree Front-End Avançado da Udacity.
+
 Você pode jogar online [aqui](https://hoseaps.github.io/frontend-nanodegree-arcade-game/)
 
 ### Objetivo  
